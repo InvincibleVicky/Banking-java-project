@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('checkout the code from github'){
             steps{
-                 git url: 'https://github.com/akshu20791/Banking-java-project/'
+                 git url: 'https://github.com/'
                  echo 'github url checkout'
             }
         }
@@ -26,6 +26,11 @@ pipeline{
         stage('package with akshat'){
             steps{
                 sh 'mvn package'
+            }
+        }
+        stage('Publish the HTML Reports') {
+            steps {
+          publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '/var/lib/jenkins/workspace/Insure-Project/target/surefire-reports', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
             }
         }
         stage('run dockerfile'){
